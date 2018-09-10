@@ -1,0 +1,8 @@
+vendor/*
+App/*/cache/*
+components/*
+cache/*
+*.lock
+*.phar
+.idea/*
+bin/templates_c/*
