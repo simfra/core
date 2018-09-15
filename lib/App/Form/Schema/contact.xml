@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <name>Tove</name>
+    <id>Jani</id>
+    <class>Reminder</class>
+    <method>Don't forget me this weekend!</method>
+    <action></action>
+    <submit></submit>
+    <fields>
+        <field>
+            <name></name>
+            <type></type>
+            <options>
+                <class></class>
+                <class_valid></class_valid>
+                <class_error></class_error>
+            </options>
+            <placeholder></placeholder>
+            <label></label>
+            <required></required>
+            <rule></rule>
+        </field>
+    </fields>
+</form>

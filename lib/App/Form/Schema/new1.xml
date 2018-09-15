@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><form>
+    <name>contact</name>
+    <id></id>
+    <class>contact_form bootstrap</class>
+    <method>post</method>
+    <action>/</action>
+    <submit>Wyślij</submit>
+    <fields>
+                <field>
+            <name>nazwa</name>
+            <type>text</type>
+            <options>
+                                <required></required>
+                            <rule>alpha</rule>
+                            <class>new</class>
+                            <class_valid></class_valid>
+                            <class_error></class_error>
+                            <placeholder></placeholder>
+                            <label>asdfsd</label>
+                            <min-length>2</min-length>
+                            <max-length>30</max-length>
+                            <autocomplete>1</autocomplete>
+            
+            </options>
+            <placeholder></placeholder>
+            <label></label>
+            <required></required>
+            <rule></rule>
+        </field>
+                <field>
+            <name>nazwa2</name>
+            <type>textarea</type>
+            <options>
+                                <required>true</required>
+                            <rule>text</rule>
+                            <class>abc</class>
+                            <class_valid></class_valid>
+                            <class_error></class_error>
+                            <placeholder></placeholder>
+                            <label>Nowy wpis</label>
+                            <autofocus>1</autofocus>
+                            <error_rule>Zle znaki</error_rule>
+            
+            </options>
+            <placeholder></placeholder>
+            <label></label>
+            <required></required>
+            <rule></rule>
+        </field>
+                <field>
+            <name>select1</name>
+            <type>select</type>
+            <options>
+                                <required></required>
+                            <rule>alphanum</rule>
+                            <class></class>
+                            <class_valid></class_valid>
+                            <class_error></class_error>
+                            <placeholder></placeholder>
+                            <label></label>
+                            <multiple></multiple>
+            
+            </options>
+            <placeholder></placeholder>
+            <label></label>
+            <required></required>
+            <rule></rule>
+        </field>
+        
+    </fields>
+</form>
