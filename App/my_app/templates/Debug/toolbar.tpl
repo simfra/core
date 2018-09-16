@@ -93,12 +93,27 @@
 		<li>
 			<i class="fas fa-database"></i>
 			<span title="Database queries">
+				{debug}
 			{if isset($dev.database)}
-						{$a=(count($dev.database)-1)}{$a}{if $ismobile!=1} ({$dev.database.time}ms){/if}
+						{$a=(count($dev.database.queries))}Queries: {$a}{if $ismobile!=1} ({$dev.database.time|round:"4"}ms){/if}
 			{else}
 			0 w (0.000 ms)
 			{/if}
 			</span>
+			<div class="panel">
+				<div class="panel-head">
+					<h6 class="panel-title" data-icon="&#xf15c;">List database queries</h6>
+				</div>
+				<div class="panel-body  max300">
+					<ul>{foreach from=$dev.database.queries key=counter item=value}
+							<li><span class="label label-info small-margin">{$counter+1}</span><span class="list-span">
+									{if $value.result == true}<span class="result_green">[ OK ]</span>{else}<span class="result_red">[ERROR]</span>{/if}
+									<span class="db_query" title="File: {$value.query_file} - Function: {$value.query_function}{if $value.result==false}&#013;Error: {$value.error_message}{else}&#013;Number of rows in result/rows affected: {$value.rows_count}{/if}">{$value.query} - <span class="result_green">Time: {$value.time|round:"4"} ms</span></span>
+								</span></li>
+						{/foreach}
+					</ul>
+				</div>
+			</div>
 		</li>
 		<li>
 			{$a=(count($dev.files))}

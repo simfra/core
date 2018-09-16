@@ -14,6 +14,7 @@ class AppKernel extends \Core\Kernel
             $this->addBundle(new Debug);
         }
         $this->addBundle(new View);
+        $this->addBundle(new Database);
     }
 
     public function getRootDir()

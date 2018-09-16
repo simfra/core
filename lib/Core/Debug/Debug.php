@@ -8,6 +8,7 @@ use Core\Bundle;
 class Debug extends Bundle
 {
     private $debug = [];
+    public $database = ["time" => 0];
     public $show_buffer = false;
     const SESSION_NAME = "SIMFRA_DEBUG";
     private $theme = "default";
@@ -22,10 +23,16 @@ class Debug extends Bundle
         register_shutdown_function([$this, "shutDown"]);
         $this->show_buffer = true;
     }
-    
+
+    public function addDatabaseLog($log)
+    {
+        $this->database['queries'][] = $log;
+    }
+
+
     public function addDebugError($type, $error)
     {
-        if ($type == "notice" || $type == "warning") {
+        if ($type == "notice" || $type == "warning" || $type == "database")  {
             $this->debug[$type][] = $error;
         }
     }
@@ -116,6 +123,7 @@ class Debug extends Bundle
         $temp['memory'] = round($mem/1024);
         $temp['files'] = get_included_files();
         $temp['lang'] = $kernel->page->preferred_lang;
+        $temp['database'] = $this->database;
         $temp['page'] = [
                 "controller" => !empty($kernel->page) ? $kernel->page->struct->controller : "[EMPTY]",
                 "method" => !empty($kernel->page) ? $kernel->page->struct->method : "[EMPTY]",

@@ -50,6 +50,7 @@ class View extends Bundle
         try {
             return $this->getTemplate()->fetch($dir . $template, $params);
         } catch (\Exception $e) {
+            die($e->getMessage());
             throw new TemplateException("View", $e->getMessage());
         }
     }

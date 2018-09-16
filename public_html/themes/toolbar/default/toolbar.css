@@ -569,3 +569,17 @@ div.panel ul li, div.panel ul li span {
 .full_toolbar {
     left: 0px !important;
 }
+
+.result_green {
+    color: #449d44 !important;
+    font-weight: bold;
+}
+
+.result_red {
+    color: #E06C5F !important;
+    font-weight: bold;
+}
+
+.db_query {
+    color: black !important;
+}
