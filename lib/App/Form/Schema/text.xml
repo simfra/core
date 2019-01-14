@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+  <name>contact</name>
+  <id/>
+  <class>contact_form bootstrap</class>
+  <method>post</method>
+  <action>/</action>
+  <submit>Send</submit>
+  <fields>
+    <field>
+      <name>contact</name>
+      <type>SubmitType</type>
+      <options>
+        <required>1</required>
+        <rule>alphanum</rule>
+        <class/>
+        <class_valid/>
+        <class_error/>
+        <name>contact</name>
+      </options>
+    </field>
+    <field>
+      <name>nazwa</name>
+      <type>TextType</type>
+      <options>
+        <required>1</required>
+        <rule>alpha</rule>
+        <class>new</class>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label>Nazwa</label>
+        <min-length>2</min-length>
+        <max-length>30</max-length>
+        <autocomplete>1</autocomplete>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+    </field>
+    <field>
+      <name>nazwa2</name>
+      <type>TextAreaType</type>
+      <options>
+        <required/>
+        <rule>text</rule>
+        <class>abc</class>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label>Nowy wpis</label>
+        <autofocus>1</autofocus>
+        <error_rule>Zle znaki</error_rule>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+    </field>
+    <field>
+      <name>nazwa3</name>
+      <type>TextAreaType</type>
+      <options>
+        <required/>
+        <rule>text</rule>
+        <class>abc</class>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label>New field</label>
+        <autofocus>1</autofocus>
+        <error_rule>Zle znaki</error_rule>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+    </field>
+    <field>
+      <name>password</name>
+      <type>PasswordType</type>
+      <options>
+        <required/>
+        <rule>alphanum</rule>
+        <class>abc</class>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label>Nowy wpis</label>
+        <autofocus>1</autofocus>
+        <error_rule>Zle znaki</error_rule>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+    </field>
+    <field>
+      <name>zgoda</name>
+      <type>CheckBoxType</type>
+      <options>
+        <required/>
+        <rule>bool</rule>
+        <class>abc</class>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label>Nowy wpis</label>
+        <autofocus>1</autofocus>
+        <error_rule>Zle znaki</error_rule>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+    </field>
+    <field>
+      <name>select1</name>
+      <type>SelectType</type>
+      <options>
+        <required/>
+        <rule>alphanum</rule>
+        <class/>
+        <class_valid/>
+        <class_error/>
+        <placeholder/>
+        <label/>
+        <multiple/>
+        <wrapped>1</wrapped>
+        <wrapped_class>form-group</wrapped_class>
+      </options>
+      <choices>
+        <Pawel>1</Pawel>
+        <Lukasz>2</Lukasz>
+      </choices>
+    </field>
+  </fields>
+</form>

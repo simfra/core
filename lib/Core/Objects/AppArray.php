@@ -15,7 +15,15 @@ class AppArray implements ArrayMethod
     {
         return $this;
     }
-    
+
+    public function __get($variable)
+    {
+        if (isset($this->values[$variable])) {
+            return $this->values[$variable];
+        } else {
+            return null;
+        }
+    }
 
     public function __debugInfo()
     {
@@ -61,5 +69,14 @@ class AppArray implements ArrayMethod
     public function add($value)
     {
         $this->values[] = $value;
+    }
+
+    public function isset($variable)
+    {
+        if (isset($this->values[$variable])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

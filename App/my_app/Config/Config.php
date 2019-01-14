@@ -2,19 +2,17 @@
 return [
     "bundles" => [
             "Database" => [
-                "host" => "blindsbypost.co.uk",
-                "port" => "3306",
-                "username" => "phpmyadmin",
-                "password" => "PolSyn123",
-                "dbname" => "hudson_dev",
+                "host" => "",
+                "port" => "",
+                "username" => "",
+                "password" => "",
+                "dbname" => "",
                 "type" => "Mysql"
             ],
             "Debug" => [
                 "show_toolbar" => true,
-                "minimalized_toolbar" => false
-,
+                "minimalized_toolbar" => false,
                 "theme" => "default"
-
             ],
             "View" => [
                 "templateDir" => APP_DIR . "templates/",

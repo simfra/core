@@ -43,6 +43,11 @@ abstract class Bundle
         }
     }
 
+    public function getService($name)
+    {
+        return $this->container->getService($name);
+    }
+
     public function defaultConfig($config)
     {
         //$reflection = new \ReflectionClass($this);

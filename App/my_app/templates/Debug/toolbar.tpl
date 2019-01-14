@@ -93,7 +93,6 @@
 		<li>
 			<i class="fas fa-database"></i>
 			<span title="Database queries">
-				{debug}
 			{if isset($dev.database)}
 						{$a=(count($dev.database.queries))}Queries: {$a}{if $ismobile!=1} ({$dev.database.time|round:"4"}ms){/if}
 			{else}

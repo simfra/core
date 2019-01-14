@@ -50,6 +50,8 @@ class Response
         if (ob_get_level()) {
             ob_end_clean();
         }
+        //echo preg_replace('/\s*/m','',$content);
+        //$content = preg_replace('/(\>)\s*(\<)/m', '$1$2', $content);
         echo $content;
 
         /*
@@ -74,7 +76,7 @@ class Response
 
     public function clean($content)
     {
-        if (class_exists("tidy")) {
+        if (class_exists("tidy1")) {
             $config = array(
                 'indent'         => true,
                 'output-xhtml'   => true,
@@ -114,7 +116,9 @@ class Response
         }
         ob_clean();
         //die("Asasda");
+        $this->content = preg_replace('/(\>)\s*(\<)/m', '$1$2', $this->content);
         $this->addHeader('Content-Length', strlen($this->content));
+        $this->addHeader('Etag', md5($this->content));
         $this->sendHeaders($this->headers);
         $this->sendContent($this->content);
         $this->isSend = true;

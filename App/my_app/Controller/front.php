@@ -1,7 +1,7 @@
 <?php
 namespace my_app\Controller;
 
-class Front extends \Core\Controller
+class front extends \Core\Controller
 {
     
     public function index()

@@ -10,7 +10,7 @@ class Request
     public $languages = array();
     public $query;
     public $cookie = array();
-
+    public $isHttps = false;
 
     
     public static function Create()
@@ -36,6 +36,11 @@ class Request
         //$query['args']->GET = new App_Array($t['query']);
         //['get'] = new App_Array($t['query']);
         $query['method'] = $_SERVER['REQUEST_METHOD'];
+        $new->isHttps = self::isHttps();
+        //echo "<pre>";
+        //print_r($_SERVER);
+        //echo "</pre>";
+        //var_dump($new->isHttps);
         // echo "<pre>";
         // print_r($_POST);
         // echo "</pre>";
@@ -47,9 +52,25 @@ class Request
         $new->languages = self::getLanguagesFromUser();
         return $new;
     }
-    
-    
-    
+
+
+    public static function isHttps()
+    {
+        if (array_key_exists("HTTPS", $_SERVER) && 'on' === $_SERVER["HTTPS"]) {
+            return true;
+        }
+        if (array_key_exists("SERVER_PORT", $_SERVER) && 443 === (int)$_SERVER["SERVER_PORT"]) {
+            return true;
+        }
+        if (array_key_exists("HTTP_X_FORWARDED_SSL", $_SERVER) && 'on' === $_SERVER["HTTP_X_FORWARDED_SSL"]) {
+            return true;
+        }
+        if (array_key_exists("HTTP_X_FORWARDED_PROTO", $_SERVER) && 'https' === $_SERVER["HTTP_X_FORWARDED_PROTO"]) {
+            return true;
+        }
+        return false;
+    }
+
     
     /**
      * request::getMethod()
@@ -87,12 +108,17 @@ class Request
      */
     public function getPreferredLanguage($list = "")
     {
+//print_r($this->languages);
         foreach ($this->languages as $lang => $value) {
-            foreach ($list as $key_list => $value_list) {
-                if (preg_match("/" . $lang . "(-[\w]{1,2})?/i", $value_list)) {
+            if ($list != "") {
+                foreach ($list as $key_list => $value_list) {
+                    if (preg_match("/" . $lang . "(-[\w]{1,2})?/i", $value_list)) {
 //                    echo "znaleziony to $value_list";
-                    return $value_list;
+                        return $value_list;
+                    }
                 }
+            } else {
+                return key($this->languages);
             }
         }
         return "";

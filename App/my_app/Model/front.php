@@ -6,7 +6,7 @@ class front extends \Core\Model
 
     public function index()
     {
-        $smarty = $this->getTemplete();
+        $smarty = $this->getTemplate();
         return $smarty->fetch("front/front.tpl");
     }
 

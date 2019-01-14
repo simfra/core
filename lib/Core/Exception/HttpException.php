@@ -6,7 +6,7 @@ class HttpException extends \RuntimeException implements HttpExceptionInterface
     private $statusCode;
     public $isProd;
     public $headers = [];
-    public function __construct($statusCode, $Message, $previous = null, $code = null)
+    public function __construct($Message,$statusCode, $previous = null, $code = null)
     {
         $this->statusCode = $statusCode;
         parent::__construct($Message, $code, $previous);
@@ -42,7 +42,7 @@ class HttpException extends \RuntimeException implements HttpExceptionInterface
     public function getTemplate()
     {
         if ($this->isProd) { // By default on production site use 500 template
-            return "Error/500.tpl";
+            return "500.tpl";
         } else { // But on dev site use fatal error template
             return "Exception/fatal.tpl";
         }

@@ -55,7 +55,6 @@ class AppObject implements ObjectMethod
     
     public function getAll()
     {
-        //return $this;
         $ret_array = array();
         foreach ($this as $key => $value) {
             if($value instanceof AppObject  || $value instanceof AppArray) {

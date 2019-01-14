@@ -8,19 +8,14 @@
     <submit>{$form->getSubmit()}</submit>
     <fields>
         {foreach from=$form->fields item=field}
-        <field>
-            <name>{$field->getName()}</name>
-            <type>{$field->getType()}</type>
+            {$field->toXml()}
+{*            <name>{$field->getName()}</name>
+            <type>{$field->getClass()}</type>
             <options>
                 {foreach from=$field->getOptions() item=option key=key}
                 <{$key}>{$option}</{$key}>
             {/foreach}
-            </options>
-            <placeholder></placeholder>
-            <label></label>
-            <required></required>
-            <rule></rule>
-        </field>
+            </options>*}
         {/foreach}
     </fields>
 </form>

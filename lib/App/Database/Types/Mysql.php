@@ -21,24 +21,35 @@ class Mysql
         $this->port = $port;
     }
 
+    public function getConnection()
+    {
+        if(!$this->connection) {
+            $this->connect();
+        }
+        return $this->connection;
+    }
 
     public function connect()
     {
+        if ($this->dbname == "") {
+            throw new FatalException("Database","You must specify Database name");
+        }
         $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->dbname, $this->port);
-        if ($this->connection !== null) {
+        if ($this->connection) {
             return $this->connection;
         } else {
-            throw new FatalException("Database","Unable to connect to database ");
+            throw new FatalException("Database","Unable to connect to database ($this->dbname)");
         }
     }
 
     public function query($string)
     {
-        if($this->connection === null) {
+        if(!$this->connection) {
             $this->connect();
         }
         $database = $this->connection;
         $result = $database->query($string);
+        //die(var_dump($result));
         return $result;
     }
 
@@ -53,6 +64,7 @@ class Mysql
         }
         ($where != "") ? $query .= " WHERE $where" : "";
         ($extra != "") ? $query .= " $extra" : "";
+        //die($query);
         return $query;
     }
 
@@ -62,8 +74,12 @@ class Mysql
         $keys = [];
         $values = [];
         foreach ($insert_values as $key => $value) {
-            $keys[] = $key;
-            $values[] = "'" . mysqli_real_escape_string($this->getDb(),$value). "'";
+            $keys[] = "`".$key."`";
+            if (is_string($value)) {
+                $values[] = "'" . mysqli_real_escape_string($this->getConnection(), $value) . "'";
+            } else {
+                $values[] = "" . mysqli_real_escape_string($this->getConnection(), $value) . "";
+            }
         }
         $query .= "(" . implode("," , $keys) .")";
         $query .= " VALUES (" . implode(",", $values) . ")";
@@ -81,7 +97,7 @@ class Mysql
         $query = "UPDATE $table SET ";
         $sets = [];
         foreach($fields as $key => $value) {
-            $sets[] = " $key='" . mysqli_real_escape_string($this->getDb(),$value). "'";
+            $sets[] = " `$key`='" . mysqli_real_escape_string($this->getConnection(),$value). "'";
         }
         $query .= implode(",", $sets);
         ($where != "") ? $query .= " WHERE $where" : "";

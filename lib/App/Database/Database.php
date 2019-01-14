@@ -46,7 +46,7 @@ class Database extends Bundle
             $class = "\App\Database\Types\\" . $this->type;
             if (class_exists($class)) {
                 $this->db = new $class($this->host, $this->username, $this->password, $this->dbname, $this->port);
-                print_r($this->db);
+                //print_r($this->db);
             } else {
                 throw new FatalException("Form", "Unknown database type:  $this->type");
             }
@@ -103,7 +103,9 @@ class Database extends Bundle
     {
         $query = $this->getDb()->select($table, $columns, $where, $extra);
         if($return != "") {
-            return $this->fetch_all($this->query($query), $return);
+            //return $this->query($query);
+
+            return $this->fetchAll($this->query($query), $return);
         } else {
             return $this->query($query);
         }
@@ -113,8 +115,9 @@ class Database extends Bundle
     public function insert($table, $insert_values)
     {
         $query = $this->getDb()->insert($table, $insert_values);
+        echo $query;
         if ($this->query($query) === true) {
-            return mysqli_insert_id($this->getDb());
+            return mysqli_insert_id($this->getDb()->getConnection());
         } else {
             return false;
         }
@@ -128,7 +131,7 @@ class Database extends Bundle
      */
     public function update($table, $fields, $where='')
     {
-        $query = $this->getDb()->insert($table, $fields, $where);
+        $query = $this->getDb()->update($table, $fields, $where);
         if ($this->query($query) == true ) {
             return $this->getDb()->get_affected_rows();
         } else {
@@ -146,8 +149,11 @@ class Database extends Bundle
         }
     }
 
-    public function fetch_all($result, $method)
+    public function fetchAll($result, $method="object")
     {
+        if (!$result) {
+            return false;
+        }
         switch($method) {
             default:
                 return $result->fetch_all(MYSQLI_BOTH);

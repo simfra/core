@@ -74,10 +74,13 @@ class Container
      * @return mixed
      * @throws FatalException
      */
-    public function getService($service_name)
+    public function getService($service_name, $singleton = false)
     {
+        if ($singleton == true) {
+            return $this->instantiate($service_name, $singleton);
+        }
         return (array_key_exists($service_name, $this->services))
-            ? $this->services[$service_name] : $this->instantiate($service_name);
+            ? $this->services[$service_name] : $this->instantiate($service_name, $singleton);
     }
 
     /**
@@ -85,7 +88,7 @@ class Container
      * @return mixed
      * @throws FatalException
      */
-    private function instantiate($class_name)
+    private function instantiate($class_name, $singleton)
     {
         try {
             $reflection = new \ReflectionClass($class_name);
@@ -116,7 +119,11 @@ class Container
                 }
             }
         }
-        return $this->addService($reflection->newInstanceArgs($dependencies), $reflection->getShortName());
+        if ($singleton == true) {
+            return $this->addService($reflection->newInstanceArgs($dependencies), $reflection->getShortName());
+        } else {
+            return $reflection->newInstanceArgs($dependencies);
+        }
     }
 
     public function addService($object, $name = "")

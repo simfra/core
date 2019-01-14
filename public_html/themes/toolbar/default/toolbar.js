@@ -2,7 +2,7 @@ if(typeof $=='undefined') {
     var headTag = document.getElementsByTagName("head")[0];
     var jqTag = document.createElement('script');
     jqTag.type = 'text/javascript';
-    jqTag.src = '/js/jquery-3.1.1.min.js';
+    jqTag.src = 'https://code.jquery.com/jquery-3.1.1.min.js';
     jqTag.onload = start;
     headTag.appendChild(jqTag);
     /*

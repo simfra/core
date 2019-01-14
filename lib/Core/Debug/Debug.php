@@ -39,79 +39,44 @@ class Debug extends Bundle
     
     public function makeDevToolbar($content, $show_buffer = true)
     {
-        //echo "<pre>"; print_r($this->getContainer()->getBundle("Config")); echo "</pre>";
-        //Session::start($this::SESSION_NAME);
         if ($this->isBundle("View")) {
             $tpl = $this->getBundle("View");
             // testowo
             $t = ["multi"=>["jeden" => ["poziom1"=> 1, "poziom2" => 2], "dwa" => [0=> "aaa", 1 => '<input type="text" value="kuku"/>'] ]];
             $tpl->assign("minimalized_toolbar", $this->minimalized_toolbar);
-            echo "<pre>";
-            print_r($this->getKernel()->page);
-            echo "</pre>";
-            $tpl->assign("dev_templates", array_merge($tpl->get_template_vars(), $t, $this->getKernel()->page->struct->getAll()));//$this->parseTemplate(array_merge($tpl->get_template_vars(), , $this->getKernel()->page->struct->getAll(), $t)));
+            $tpl->assign("dev_templates", array_merge($tpl->get_template_vars(), $t, ["struct" => $this->getKernel()->page->struct->getAll()]));//$this->parseTemplate(array_merge($tpl->get_template_vars(), , $this->getKernel()->page->struct->getAll(), $t)));
             if ($this->show_buffer == true && mb_strlen(ob_get_contents()) && $show_buffer === true) {
                 $tpl->assign("debug_buffer", ob_get_contents());
             }
             if (strlen(ob_get_contents())) {
                 ob_end_clean();
             }
+            // user
+            if ($this->isBundle("Session")) {
+                $session = $this->getBundle("Session");
+                $user = $session->getUser();
+                $user['permissions'] = explode(",", $session->getPermissions());
+                $tpl->assign("logged_user", $user);
+            }
             $tpl->assign("dev", $this->devToolbar());
             $toolbar = $tpl->fetch("Debug/toolbar.tpl");
-            $head = "";
-            //$dom = new \DOMDocument();
-//            //$implementation = new \DOMImplementation();
-//            $doctype = (new \DOMImplementation)->createDocumentType("html");
-//            $dom = (new \DOMImplementation)->createDocument(null, null, $doctype);
-//            $dom->appendChild($doctype);
-//            $dom->loadHTML($content, LIBXML_DTDLOAD);
-//
-//            echo $dom->saveHTML();
-            //$doctype = \DOMImplementation::createDocumentType("html");
-            //$doc = \DOMImplementation::createDocument("", "", $doctype);
-      /*      $doc = new \DOMDocument('1', 'UTF-8');
-            $doc->loadHTML($content."</html>");//"<HTML>sdfsdf</HTML>");
-            //if($doc->getElementsByTagName("!doctype")->length ==0 )
-            {
-              //  echo "brak doctype";
-                echo "##".$doc->doctype."#";
-            }
-            $a = $doc->createElement("head", "afsdfsd");
-            $doc->appendChild($a);*/
-//die();
-  //          die($doc->saveHTML());
             $content = trim($content);
-
-            //die($dom)
-            //var_dump($content);
-            //die();
-            //$indenter = new \Gajus\Dindent\Indenter();
-            //$indenter->indent('[..]');
-            //$tidy->parseString($html, $tidy_options);
-            echo $this->theme;
             $theme_css = '<link type="text/css" href="/themes/toolbar/'.$this->theme.'/toolbar.css" rel="stylesheet" />';
             $theme_js = '<script src="/themes/toolbar/'.$this->theme.'/toolbar.js" ></script>';
-            (strpos($content, "<body")=== false) ? $content = "<body>$content</body>" : "";
-            (strpos($content, "<head>") === false)
+            (strpos($content, "<body")=== false && strpos($content, "</head>") == false) ? $content = "<body>$content</body>" : "";
+            (strpos($content, "</head>") === false)
                 ? $content = '<head>' . $theme_css . $theme_js . '</head>' . $content
                 : $content = str_replace("</head>", $theme_css . $theme_js . '</head>', $content);
             (strpos($content, "<html")=== false) ? $content = "<html>$content</html>" : "";
-
-            /*if (strpos($content, "</head>")!== false) {
-                $content = str_replace("</head>", '<link type="text/css" href="/css/toolbar_new.css" rel="stylesheet" /></head>'. $body, $content);
-            } else {
-                $content = $head . '<head><link type="text/css" href="/css/toolbar_new.css" rel="stylesheet" /></head>' . $body . $content;
-            }*/
             (strtoupper(substr($content, 0, 9)) !== '<!DOCTYPE') ? $content = "<!DOCTYPE html>$content"  : "";
-            //$content = $indenter->indent($content);
             if (strpos($content, "</body>")!== false) {
-                $content = str_replace("</body>", $toolbar . " </body>", $content);
+                $content = str_replace("</body>", $toolbar . "</body>", $content);
             } else {
                 $content .= $toolbar;
             }
         }
         $content .="";
-        return $content;//$content;
+        return $content;
     }
     
 
@@ -127,7 +92,7 @@ class Debug extends Bundle
         $temp['page'] = [
                 "controller" => !empty($kernel->page) ? $kernel->page->struct->controller : "[EMPTY]",
                 "method" => !empty($kernel->page) ? $kernel->page->struct->method : "[EMPTY]",
-                "route"=> !empty($kernel->page->url) ? $kernel->page->url : $_GET['url'],
+                "route"=> !empty($kernel->page->url) ? $kernel->page->url : $_SERVER['REQUEST_URI'],
                 "id" =>  !empty($kernel->page) ? $kernel->page->id : "[EMPTY]",
                 "app" => !empty($kernel->application_name) ? $kernel->application_name : "NO APP NAME"
             ];
@@ -136,9 +101,6 @@ class Debug extends Bundle
             $temp['http'] = http_response_code();
             $temp['time'] = round(microtime(true) - $kernel->start_time, 3);
             $temp['errors'] = $this->debug;
-            echo "<pre>";
-            //print_r($temp);
-            echo "</pre>";
         return $temp;
     }
     
