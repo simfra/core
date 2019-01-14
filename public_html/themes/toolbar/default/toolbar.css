@@ -1,5 +1,5 @@
 @import url('https://use.fontawesome.com/releases/v5.0.6/css/all.css');
-@import url('http://fonts.googleapis.com/css?family=Cuprum');
+@import url('https://fonts.googleapis.com/css?family=Cuprum');
 @font-face {
     font-family: 'arsenalregular';
     src: url('fonts/arsenal-regular-webfont.eot');
@@ -11,51 +11,32 @@
     font-style: normal;
 }
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin:0;
-    padding:0;
-    border:0;
-    font:inherit;
-    font-size:100%;
-    vertical-align:baseline;
-    //font-family: arsenalregular;
-}
 
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display:block;
-}
 
-body {
-    line-height:1;
-}
-
-ul, ol {
+#toolbar ul, ol {
     list-style:none;
 }
 
-blockquote, q {
+#toolbar blockquote, q {
     quotes:none;
 }
 
-blockquote:before, blockquote:after, q:before, q:after {
+#toolbar blockquote:before, blockquote:after, q:before, q:after {
     content:'';
     content:none;
 }
 
-table {
+#toolbar table {
     border-collapse:collapse;
     border-spacing:0;
 }
 
-* {
+#toolbar .* {
     margin: 0;
     padding: 0;
 }
 
-.label-badge {
+#toolbar .toolbar-label-badge {
     font-size: 11px;
     padding: 3px 7px 4px 7px;
     line-height: 14px;
@@ -63,11 +44,11 @@ table {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.label-danger {
+#toolbar .toolbar-label-danger {
     background-color: #E06C5F;
 }
 
-.label {
+#toolbar .toolbar-label {
     display: inline ;
     padding: .4em .6em .3em ;
     font-size: 85% ;
@@ -81,7 +62,7 @@ table {
     margin-left: 2px ;
 }
 
-.label-list {
+#toolbar .toolbar-label-list {
     display: inline !important;
     padding: .4em .6em .3em !important;
     font-size: 85% !important;
@@ -96,99 +77,99 @@ table {
 }
 
 
-.background-green {
+#toolbar .toolbar-background-green {
     background-color: #239169;
 }
 
-.background-blue {
+#toolbar .toolbar-background-blue {
     background-color: #6DB6EE;
 }
 
-.background-red {
+#toolbar .toolbar-background-red {
     background-color: #F4A68B;
 }
 
-.background-light {
+#toolbar .toolbar-background-light {
     background-color: #FCF8E3;
 }
 
-.background-szary {
+#toolbar .toolbar-background-szary {
     background-color: #5D7480;
 }
-.blue {
+#toolbar .toolbar-blue {
     color: #6DB6EE;
 }
 
-.red {
+#toolbar .toolbar-red {
     color: #F4A68B;
 }
 
-.light {
+#toolbar .toolbar-light {
     color: #FCF8E3;
 }
 
-.szary {
+#toolbar .toolbar-szary {
     color: #5D7480;
 }
 
-.czerwony {
+#toolbar .toolbar-czerwony {
     color: #E06C5F;
 }
 
 
-.label-default {
+#toolbar .toolbar-label-default {
     background-color: #999999;
 }
-.label-default[href]:hover,
-.label-default[href]:focus {
+#toolbar .toolbar-label-default[href]:hover,
+#toolbar .toolbar-label-default[href]:focus {
     background-color: #808080;
 }
 
-.label-primary {
+#toolbar .toolbar-label-primary {
     background-color: #40484C;
 }
-.label-primary[href]:hover,
-.label-primary[href]:focus {
+#toolbar .toolbar-label-primary[href]:hover,
+#toolbar .toolbar-label-primary[href]:focus {
     background-color: #3071a9;
 }
 
-.label-success {
-    //background-color: #239169;
+#toolbar .toolbar-label-success {
+//background-color: #239169;
     background-color: #449d44 !important;
 }
-.label-success:hover,
-.label-success:focus {
+#toolbar .toolbar-label-success:hover,
+#toolbar .toolbar-label-success:focus {
     background-color: #449d44;
 }
 
-.label-info {
+#toolbar .toolbar-label-info {
     background-color: #3C9AC9 !important;
 }
-.label-info[href]:hover,
-.label-info[href]:focus {
+#toolbar .toolbar-label-info[href]:hover,
+#toolbar .toolbar-label-info[href]:focus {
     background-color: #31b0d5;
 }
 
-.label-warning {
-    //background-color: #DD845A;
+#toolbar .toolbar-label-warning {
+//background-color: #DD845A;
     background-color: #ec971f;
 }
-.label-warning[href]:hover,
-.label-warning[href]:focus {
+#toolbar .toolbar-label-warning[href]:hover,
+#toolbar .toolbar-label-warning[href]:focus {
     background-color: #ec971f;
 }
 
-.label-danger {
+#toolbar .toolbar-label-danger {
     background-color: #E06C5F;
 }
-.label-danger[href]:hover,
-.label-danger[href]:focus {
+#toolbar .toolbar-label-danger[href]:hover,
+#toolbar .toolbar-label-danger[href]:focus {
     background-color: #c9302c;
 }
 
 
 
-.navbar {
+#toolbar .toolbar-navbar {
     font-family: "Cuprum","Helvetica Neue",Helvetica,Arial,sans-serif;
     outline: 0 solid !important;
     position: fixed;
@@ -196,36 +177,35 @@ table {
     width: 100%;
     left: 0%;
     background-color: #333;
-    height: 40px;
+    min-height: 40px;
     padding: 0 !important;
     font-size: 14px;
 }
 
 
-.navbar i {
+#toolbar .toolbar-navbar i {
     color: #fff;
     font-size: 18px;
     margin: 10px 5px 0 10px;
     display: block;
     float: left;
 }
-.navbar-bottom {
+#toolbar .toolbar-navbar-bottom {
     bottom: 0 !important;
 }
 
-.navbar ul {
+#toolbar .toolbar-navbar ul {
     padding: 0 !important;
     margin: 0;
     list-style: none;
 }
 
-.navbar ul li {
+#toolbar .toolbar-navbar ul li {
     float: left;
     padding: 0 10px 0 0px;
     border-right: 1px solid #444;
-    height: 40px;
 }
-.navbar ul li:first-child {
+#toolbar .toolbar-navbar ul li:first-child {
     border-right: 0 !important;
 }
 
@@ -261,7 +241,7 @@ table {
 */
 
 
-.navbar ul img {
+#toolbar .toolbar-navbar ul img {
     width: 30px;
     height: 28px;
     vertical-align: middle !important;
@@ -271,12 +251,12 @@ table {
 }
 
 
-.navbar span {
+#toolbar .toolbar-navbar span {
     line-height: 40px;
     color: #fff;
 }
 
-.navbar-status {
+#toolbar .toolbar-navbar-status {
     width:40px;
     height: 40px;
     display: block;
@@ -288,7 +268,7 @@ table {
     padding: 0 !important;
 }
 
-.navbar-error {
+#toolbar .toolbar-navbar-error {
     padding-left: 10px;
     padding-right: 5px;
     line-height: 1 !important;
@@ -296,7 +276,7 @@ table {
 
 
 
-.navbar  ul li div.panel {
+#toolbar .toolbar-navbar  ul li div.toolbar-panel {
     display: none;
     min-width: inherit;
     width: inherit;
@@ -310,19 +290,26 @@ table {
     font-size: 14px;
 }
 
-.navbar ul li:HOVER > div.panel {
+#toolbar .toolbar-navbar ul li:HOVER > div.toolbar-panel {
     display: block;
     animation-name: grow;
     animation-duration: 0.3s;
 }
 
+.pulse {
+    animation: pulse;
+    animation-duration: 5000ms;
+    transform-origin:70% 70%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
 
-div.panel ul li:HOVER {
-    background-color: #ddd;
+div.toolbar-panel ul li:HOVER {
+    background-color: #ddd !important;
     cursor: default;
 }
 
-div.panel ul li, div.panel ul li span {
+div.toolbar-panel ul li, div.toolbar-panel ul li span {
     cursor: default;
 }
 
@@ -340,10 +327,15 @@ div.panel ul li, div.panel ul li span {
     }
 }
 
+#toolbar pre {
+    border: 0px !important;
+}
+#toolbar p,#toolbar span, #toolbar div, #toolbar pre {
+    font-family: Arial,sans-serif;
+    color: black;
+}
 
-
-.panel {
-    border: 1px solid #ddd;
+#toolbar .toolbar-panel {
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
     min-width: 100px;
@@ -355,7 +347,7 @@ div.panel ul li, div.panel ul li span {
 
 
 
-.panel-head {
+#toolbar .toolbar-panel-head {
     background-color: #333;//fafafa;
     height: 40px;
     font-size: 13px;
@@ -366,18 +358,23 @@ div.panel ul li, div.panel ul li span {
     position: relative;
 }
 
-.panel-body{
+#toolbar .toolbar-panel-body{
     width: 100%;min-width: 200px;
+    max-width: 700px;
     background-color: #fff;
     overflow: auto;
+    border-top: 0px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    max-height: 500px;
 }
 
-.max300 {
+#toolbar .toolbar-max300 {
     max-height: 300px;
     overflow-y: auto;
     min-height: 200px;
 }
-.panel-title {
+#toolbar .toolbar-panel-title {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 15px;
@@ -386,27 +383,28 @@ div.panel ul li, div.panel ul li span {
     font-family: "Cuprum", "Helvetica Neue",Helvetica,Arial,sans-serif;
     padding: 0 5px 0 5px;
 }
-.panel-title:before{
+#toolbar .toolbar-panel-title:before{
     font-family: FontAwesome;
     content: attr(data-icon);
     margin-left: 5px;
     margin-right: 5px;
+    line-height: 40px;
 }
 
-.lev1el {
+#toolbar .toolbar-lev1el {
     margin-left: 10px;
 }
 
-.lev1el span{
+#toolbar .toolbar-lev1el span{
     color: #333;
 }
 
 
-.lev1el.sub li{
+#toolbar .toolbar-lev1el.sub li{
     padding-left: 20px !important;
 }
 
-.panel-body ul li {
+#toolbar .toolbar-panel-body ul li {
     min-height: 40px;
     background-color: inherit;
     line-height: 40px;
@@ -415,29 +413,43 @@ div.panel ul li, div.panel ul li span {
     width: 100%;
     border: 0 !important;
     margin: 0px;
-    padding: 0 15px 0 5px !important;
+    padding: 0 15px 0 15px !important;
     white-space: nowrap;
 }
 
-.panel-body ul li .list-span {
+#toolbar ul li span {
+    font-family: "Cuprum", "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    line-height: 40px !important;
+}
+
+#toolbar .toolbar-panel-body ul li span {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #fff;
+    line-height: 40px !important;
+
+}
+
+#toolbar .toolbar-panel-body ul li .toolbar-list-span {
     padding-left: 5px;
     padding-right: 5px;
     color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 
-.small-margin {
+#toolbar .toolbar-small-margin {
     margin-left: 5px;
     margin-right: 5px;
 }
 
-.panel-body ul li:hover {
-  //  background-color: #ddd;
+#toolbar .toolbar-panel-body ul li:hover {
+//  background-color: #ddd;
 }
 
 
 
-.panel-body .first {
+#toolbar .toolbar-panel-body .toolbar-first {
     min-width: 120px;
     text-align: right;
     float: left;
@@ -448,7 +460,7 @@ div.panel ul li, div.panel ul li span {
     padding: 0px 5px 0 5px;
 }
 
-.panel-body .second {
+#toolbar .toolbar-panel-body .toolbar-second {
     min-width: 100px;
     text-align: left;
     float: left;
@@ -459,15 +471,15 @@ div.panel ul li, div.panel ul li span {
     white-space: nowrap;
 }
 
-.table {
+#toolbar .toolbar-table {
     display: table;
     border: 0px solid black;
 }
 
-.row { display:table-row;
+#toolbar .toolbar-row { display:table-row;
 }
 
-.cell {
+#toolbar .toolbar-cell {
     display:table-cell;
     background-clip: padding-box;
     background-color: none;
@@ -475,22 +487,22 @@ div.panel ul li, div.panel ul li span {
     vertical-align: top;
 }
 
-.cell:last-child {
+#toolbar .toolbar-cell:last-child {
     border-right: 0 none;
 }
 
 
-.h400 {
+#toolbar .toolbar-h400 {
     max-height: 400px;
     overflow-y: scroll;
 }
 
 
-.no-border {
+#toolbar .toolbar-no-border {
     border: 0 !important;
 }
 
-.border-grey {
+#toolbar .toolbar-border-grey {
     border: 1px solid #ddd;
 }
 
@@ -503,7 +515,7 @@ div.panel ul li, div.panel ul li span {
 #template_vars li {
     min-height: 40px;
     color: #333;
-    padding: 0 15px 0 5px !important;
+    padding: 0 14px 0 15px !important;
 }
 
 #template_vars span {
@@ -512,7 +524,7 @@ div.panel ul li, div.panel ul li span {
 
 
 
-.span_show{
+#toolbar .toolbar-span_show{
     display: block !important;
     opacity: 1 !important;
 }
@@ -530,7 +542,7 @@ div.panel ul li, div.panel ul li span {
     100% {transform: scale(1);}
 }
 
-.dev_toolbar_plus{
+#toolbar .dev_toolbar_plus{
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -546,40 +558,48 @@ div.panel ul li, div.panel ul li span {
 
 
 
-.devtoolbar_status_ok {
+#toolbar .devtoolbar_status_ok {
     background-color: #449d44 !important;
 }
 
-.devtoolbar_status_warning {
+#toolbar .devtoolbar_status_warning {
     background-color: #E06C5F !important;
 }
 
-.devtoolbar_status_notice {
-    background-color: #ec971f !important;
+#toolbar .devtoolbar_status_notice {
+    //background-color: #ffcb2c !important;
+    background-color: #FF8B00 !important;
 }
 
-.font_grey {
+#toolbar .toolbar-font_grey {
     color: #333;
 }
 
-.minimalized_toolbar {
+
+
+
+.toolbar-font_grey {
+    color: #333;
+}
+
+.toolbar-minimalized_toolbar {
     left: 100%;
 }
 
-.full_toolbar {
+.toolbar-full_toolbar {
     left: 0px !important;
 }
 
-.result_green {
+.toolbar-result_green {
     color: #449d44 !important;
     font-weight: bold;
 }
 
-.result_red {
+.toolbar-result_red {
     color: #E06C5F !important;
     font-weight: bold;
 }
 
-.db_query {
+.toolbar-db_query {
     color: black !important;
 }

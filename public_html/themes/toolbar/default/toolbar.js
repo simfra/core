@@ -1,43 +1,39 @@
-if(typeof $=='undefined') {
+if(typeof $=='undefined'  || typeof jQuery=='undefined') {
     var headTag = document.getElementsByTagName("head")[0];
     var jqTag = document.createElement('script');
     jqTag.type = 'text/javascript';
-    jqTag.src = 'https://code.jquery.com/jquery-3.1.1.min.js';
+    jqTag.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
     jqTag.onload = start;
     headTag.appendChild(jqTag);
-    /*
-     var font_cuprum = document.createElement('link');
-     font_cuprum.setAttribute('rel', 'stylesheet');
-     font_cuprum.setAttribute("type", "text/css");
-     font_cuprum.setAttribute('href', 'http://fonts.googleapis.com/css?family=Cuprum');
-     headTag.appendChild(font_cuprum);*/
 } else {
-    start();
+    $(document).ready(function() {
+        start();
+    });
 }
 
 
 function start()
 {
     $( document ).ready(function() {
-        $("div.navbar[class!=minimal]").before().css('left', $(window).width()-40);
+        $("div[class*='toolbar-navbar']").before().css('left', $(window).width()-40);
     });
 
     $(window).resize(function() {
-        $("div.navbar").before().css('left', $(window).width()-40);
+        $("div[class*='toolbar-navbar']").before().css('left', $(window).width()-40);
     });
 
     var counter =0;
-    $("li.navbar-status").on('click',function(){
-        dev($("div.navbar"));
+    $("li.toolbar-navbar-status").on('click',function(){
+        dev($("div[class*='toolbar-navbar']"));
     });
 
 
-
-    $('body').on('keydown', function(event) {
+    $(window).keydown(function(event){
         if (event.keyCode == 192 && event.ctrlKey == true) {
-            dev($("div.navbar"));
+            dev($("div[class*='toolbar-navbar']"));
         }
     });
+
 
     $("#buf").click(function(){
         if($("#polo").css("display")=="none") {
@@ -49,21 +45,22 @@ function start()
 
 
     $("body").on('click', "#ajax_list tbody tr[data-response]",function(){
-        if($(this).find("span[name='hidden_list']").hasClass("span_show")!=true){
-            $(this).find("span[name='hidden_list']").addClass("span_show");
+        if($(this).find("span[name='hidden_list']").hasClass("toolbar-span_show")!=true){
+            $(this).find("span[name='hidden_list']").addClass("toolbar-span_show");
         }
         else{
-            $(this).find("span[name='hidden_list']").removeClass("span_show");
+            $(this).find("span[name='hidden_list']").removeClass("toolbar-span_show");
         }
     });
 
     $("body").on('click', "span.dev_toolbar_plus",function(){
-        if($(this).parent().next().hasClass("span_show")!=true){
-            $(this).parent().next().addClass("span_show");
+        console.log("click");
+        if($(this).parent().next().hasClass("toolbar-span_show")!=true){
+            $(this).parent().next().addClass("toolbar-span_show");
             $(this).html("-");
         }
         else{
-            $(this).parent().next().removeClass("span_show");
+            $(this).parent().next().removeClass("toolbar-span_show");
             $(this).html("+");
         }
         /*
@@ -101,7 +98,6 @@ function start()
     {
         if( $(pasek).css("left") =="0px") {
             $(pasek).animate({ left: $(window).width()-40 }, 300);
-            $(pasek).removeClass("full_toolbar");
         }
         else{
             $(pasek).animate({ left: "0px" }, 300);
