@@ -4,9 +4,10 @@ namespace Core\Route;
 use Core\Exception\FatalException;
 use Core\Exception\HttpException;
 use Core\Exception\NotFoundException;
-use Core\Http\Request\Request;
+use Core\Request\Request;
 use Core\Objects\AppArray;
 use Core\Objects\AppObject;
+use Core\Objects\AppPage;
 
 /**
  * Route
@@ -315,9 +316,9 @@ class Route
             return $this->extractPage($links, "cond", $preffered_lang);
         } elseif ($exact > 1 || $cond > 1) {
             // temporary - to show i
-            //echo "<pre>LINKS";
-            //print_r($links);
-            //echo "</pre>";
+            echo "<pre>LINKS";
+            print_r($links);
+            echo "</pre>";
             throw new HttpException( "Requested url fit to more than one url in struct!. Check Your struct file.", 404);
         } else {
             throw new NotFoundException("Requested url not found.", 404);

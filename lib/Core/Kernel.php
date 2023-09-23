@@ -3,14 +3,16 @@ namespace Core;
 
 use App\User\User;
 use Core\Exception\NotFoundException;
-use Core\Http\Request\Request;
+use Core\Request\Request;
 use Core\Route\Route;
 use Core\Exception\FatalException;
 use Core\Exception\PermissionException;
 use Core\Config\Config;
-use Core\Http\Response\Response;
+use Core\Response\Response;
 use Core\Objects\AppArray;
 use Core\Objects\AppObject;
+use Core\Http\Page;
+use Core\Enums\App_Type;
 
 abstract class Kernel
 {
@@ -34,10 +36,13 @@ abstract class Kernel
         $this->start_time = microtime(true);
         $this->container = new Container();
         set_exception_handler(array($this, "handleException"));
+        set_error_handler(function($errno, $errstr, $errfile, $errline ){
+            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
         $this->application_name = $application_name;
-        if ("prod" === $application) {
+        if ( App_Type::PROD === $application) {
             $this->isProd = true;
-        } elseif ("dev" === $application) {
+        } elseif ( App_Type::DEV === $application) {
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
             $this->isProd = false;
@@ -219,6 +224,9 @@ abstract class Kernel
             }
 //            $route = new Route($this);
             $this->config = new AppObject($this->config);
+            //$this->page = new Http\Page\Page();
+            //echo $this->page->config;
+            //die(2);
             $this->page = new AppObject((new Route($this))->checkUrl($request, $request->getPreferredLanguage($this->config->app->languages)));
             $this->page->add("request", $request);
             $this->page->add("preferred_lang", $request->getPreferredLanguage($this->config->app->languages));
@@ -243,18 +251,26 @@ abstract class Kernel
     // @TODO: Refactor this
     public function handleException($exception)
     {
+        error_log("asdasdas\n");
+        echo "Exception<pre>";
+        print_r($exception);
+        echo "</pre>";
+        die();
         $exception->isProd = $this->isProd; // to determine if exception been thrown in production/dev enviroment
         $temporary= new AppObject([
                 "controller" => method_exists($exception, "getName") ? $exception->getName(): "Unknown name",
                 "method" => __FUNCTION__,
-                "preferred_lang" => (method_exists($this->page, "get") ) ? $this->page->preferred_lang : "en",
+                "preferred_lang" => (isset($this->page) && method_exists($this->page, "get") ) ? $this->page->preferred_lang : "en",
                 "lang" => isset($this->page->lang) ? $this->page->lang : "en"
             ]);
-        $this->page = new AppObject(["struct" => $temporary,
+        $this->page = new Http\Page\Page();
+        echo $this->page->config;
+       /* $this->page = new AppObject(["struct" => $temporary,
         "preferred_lang" => (method_exists($this->page, "get") ) ? $this->page->preferred_lang : "en",
                 "lang" => isset($this->page->lang) ? $this->page->lang : "en"
-        ]);
+        ]);*/
         if ($this->container === null ||  $this->container->isBundle("View") === false) { // No templates system
+            echo "Bez szablonow";
             http_response_code((method_exists($exception, "getStatusCode") ? $exception->getStatusCode() :500));
             $content = "Fatal Error occured with message <b>". $exception->getMessage() . "</b> in file " . $exception->getFile(). " line " . $exception->getLine() ;
             $response = new Response($content, (method_exists($exception, "getStatusCode") ? $exception->getStatusCode() :500), ((method_exists($exception, "getHeaders")) ? $exception->getHeaders() : ""));
@@ -278,6 +294,7 @@ abstract class Kernel
             $response->sendResponse();
             return $response;
         } else { // Development enviroment - show Exception page with debug info
+            echo "development";
             if (is_a($exception, "\Error")) {
                 $template->assign("title", "Error Exception");
                 $template->assign("name", "Error exception");
@@ -317,7 +334,7 @@ abstract class Kernel
         if (ob_get_length() && !$this->isProd && $this->page->struct->get("type") == "content") {
             echo "*** WARNING ***<br /> Unsend content in buffer! ";
         } else {
-            //ob_end_clean();
+            ob_end_clean();
         }
     }
 
@@ -446,18 +463,61 @@ abstract class Kernel
         return $response;
     }
 
-
-    public static function loadApp($app_name, $app_type)
+    public static function loadApp(string $app_name, App_Type $app_type)
     {
-        $kernel = "\\".$app_name."\\AppKernel";
-        if (class_exists($kernel)) {
-            return new $kernel($app_name, $app_type);
-        } else {
-            http_response_code(500);
-            $content = "Fatal Error occured with message <b>Unable to load app: $app_name</b>";
-            $response = new Response($content, 500, false);
-            $response->sendResponse();
+        if ($app_type === App_Type::PROD) {
+            echo "sadasdas";
         }
+        try {
+            $kernel = "\\" . $app_name . "\\AppKernel";
+            echo $app_name . " Kernel: $kernel";
+            if (class_exists($kernel)) {
+                return new $kernel($app_name, $app_type);
+            } else {
+                $content = "Fatal Error occured with message <b>Unable to load app: $app_name</b>";
+            }
+        } catch (\Throwable $exception) {
+            $content = "Fatal Error occured with message:<br/> <b>".$exception->getMessage() ."</b><br/>
+                                File: ". $exception->getFile() ."<br/> Line: " . $exception->getLine();
+            $exception = null;
+        }
+        http_response_code(500);
+        $debug_info = "<span style='width: 90%; height: 300px; margin: 20 auto; overflow-y: scroll; background-color: #22395c; border-radius: 5px;display: block; color: white; padding: 10px;'><h1 style='border-bottom: 1px solid white'>Debug trace:</h1><br/>"."<pre>".print_r(debug_backtrace(), true) . "</pre>"."</span>";
+        $buffer = "<span style='width: 90%; height: 300px; margin: 20 auto; overflow-y: scroll; background-color: #22395c; border-radius: 5px;display: block; color: white; padding: 10px;'><h1 style='border-bottom: 1px solid white'>Buffer:</h1><br/>".ob_get_contents()."</span>";
+        ob_end_clean();
+        die($content . $debug_info . $buffer);
+
+     /*       $kernel = "\\" . $app_name . "\\AppKernel";
+            if (class_exists($kernel)) {
+                return new $kernel($app_name, $app_type);
+            } else {
+                //throw new FatalException("Unable to load app: $app_name",500);
+
+                //die();
+                $content = "Fatal Error occured with message <b>Unable to load app: $app_name</b>";
+                try {
+                    //$response = Response::getResponse();
+                    $response = new Response();
+
+                    echo "<pre>";
+                    print_r($response);
+                    echo "</pre>";
+                    $response->sendResponse();
+                    //return $response;
+//                    die();
+                    //$response->sendResponse();
+                } catch (\Throwable $exception) {
+                    http_response_code(500);
+                    ob_end_flush();
+                    $content = "Fatal Error occured with message:<br/> <b>".$exception->getMessage() ."</b><br/>
+                                File: ". $exception->getFile() ."<br/> Line: " . $exception->getLine();
+                    die($content);
+                }
+
+                //$response = new \Core\Response\Http\Response\Response($content, 500, false);
+            }
+*/
+
     }
 
     public function getIP()

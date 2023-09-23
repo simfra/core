@@ -104,7 +104,7 @@ class Mysql
         return $query;
     }
 
-    public function delete($table, $where)
+    public function delete($table, $where): string
     {
         $query = "DELETE FROM $table ";
         ($where != '') ? $query .= " where $where" : "";

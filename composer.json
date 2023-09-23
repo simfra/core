@@ -1,6 +1,13 @@
-    {
-        "require": {
-            "smarty/smarty": "~3.1"
-        }
+{
+  "require": {
+    "smarty/smarty": "~3.1",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Core\\": "lib/Core/",
+      "my_app\\": "App/my_app",
+      "App\\": "lib/App/"
     }
-
+  }
+}

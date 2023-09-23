@@ -28,6 +28,9 @@ class Database extends Bundle
         }
     }
 
+    /**
+     * @throws FatalException
+     */
     private function connect()
     {
 
@@ -40,6 +43,9 @@ class Database extends Bundle
     }
 
 
+    /**
+     * @throws FatalException
+     */
     public function getDb()
     {
         if ($this->db === null) {
@@ -53,13 +59,15 @@ class Database extends Bundle
         }
         return $this->db;
     }
+
     /**
      * base::query()
      *
      * @param string $string - Query to execute
-     * @return $result array - Return array if succeed or false if error
+     * @return false|mixed $result array - Return array if succeed or false if error
+     * @throws FatalException
      */
-    public function query($string)
+    public function query(string $string)
     {
         $time_start = microtime(true);
         $result = $this->getDb()->query($string);
@@ -80,7 +88,7 @@ class Database extends Bundle
                 $temp['query_file'] = $debug[$nr]['class'];
                 $temp['query_function'] = $debug[$nr]['function'];
             }
-            ($result === false) ? $temp['result'] = $result : $temp['result'] = true;
+            ($result === false) ? $temp['result'] = false : $temp['result'] = true;
             $temp['error_message'] = $this->getLastError();
             $temp['rows_count'] = $this->getDb()->get_affected_rows();
             $app->addDatabaseLog($temp);
@@ -94,6 +102,9 @@ class Database extends Bundle
     }
 
 
+    /**
+     * @throws FatalException
+     */
     public function getLastError()
     {
         return $this->getDb()->getLastError();

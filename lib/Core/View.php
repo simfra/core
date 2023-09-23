@@ -19,7 +19,7 @@ class View extends Bundle
         $this->force_compile = true;
         if ($this->template === null) {
             $this->template = new Smarty;
-            if (trim($this->compileDir) != "" && !file_exists($this->compileDir)) {
+            if (trim($this->compileDir) !== "" && !file_exists($this->compileDir)) {
                 if (!mkdir($this->compileDir, 0777, true)) {
                     die('Failed to create folder: ' . $this->compileDir . debug_print_backtrace());
                 }
@@ -27,8 +27,6 @@ class View extends Bundle
                 throw new TemplateException("View", "No compile folder set '" . $this->compileDir . "'");
             }
             $this->template->setTemplateDir($this->templateDir)->setCompileDir($this->compileDir);
-            //$this->template->
-            Smarty::muteExpectedErrors();
         }
         return $this->template;
     }
@@ -37,6 +35,9 @@ class View extends Bundle
     {
         $this->getTemplate()->assign($key, $value);
     }
+
+
+
     
     
     public function fetch($template, $dir = APP_DIR . "templates/", $params = "")

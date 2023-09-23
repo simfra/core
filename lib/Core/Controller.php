@@ -2,7 +2,7 @@
 namespace Core;
 
 use Core\Exception\FatalException;
-use Core\Http\Response\Response;
+use Core\Response\Response;
 
 class Controller
 {

@@ -90,7 +90,7 @@
 			<li>
 				<i class="fas fa-database"></i>
 				<span title="Database queries">
-				        {if isset($dev.database)}
+				        {if isset($dev.database.queries)}
 						{$a=(count($dev.database.queries))}Queries: {$a}{if $ismobile!=1} ({$dev.database.time|round:"4"}ms){/if}
 					{else}
 						0 w (0.000 ms)
@@ -139,9 +139,11 @@
 							</div>
 							<div class="toolbar-panel-body toolbar-max300">
 								<ul>
+									{if $dev.errors}
 									{foreach from=$dev.errors.notice item=value key=key}
 										<li title="File: {$value.file} - Line: {$value.line}"><span class="toolbar-label toolbar-label-warning toolbar-small-margin">{$key+1}</span><span class="toolbar-list-span">{$value.error}</span></li>
 									{/foreach}
+									{/if}
 								</ul>
 							</div>
 						</div>

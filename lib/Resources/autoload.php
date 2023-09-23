@@ -10,7 +10,9 @@ if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
 } else {
     die("Please install composer package or install SIMFRA Framework with vendors");
 }
+/*
 spl_autoload_register(function ($class) {
+    echo "Namespace: " .__NAMESPACE__." Class: $class <br/>";
     $class_file = str_replace('\\', '/', $class) .".php";
     $dir = realpath(__DIR__ . "/../../") . "/";
     if (file_exists($dir . "App/" . $class_file)) {
@@ -25,3 +27,4 @@ spl_autoload_register(function ($class) {
         include_once(APP_DIR . "lib/" . $class_file);
     }
 });
+*/

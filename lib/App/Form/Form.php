@@ -20,11 +20,13 @@ class Form
     /**
      * Form::__construct()
      * Domyslne wartosci dla formularza: name = 'submit', method = 'get', submit = 'submit', id i klasa dla formularz nie wymagana
+     * @param $form array
      * @return
      */
     public function __construct($form = [])
     {
-        (isset($form['name']) ? $this->name = $form['name'] : $this->name = "submit");
+        //(isset($form['name']) ? $this->name = $form['name'] : $this->name = "submit");
+        $this->name = $form['name'] ?? "submit";
         (isset($form['id']) ? $this->id = $form['id'] : "");
         (isset($form['class']) ? $this->class = $form['class'] : "");
         (isset($form['method']) ? $this->method = $form['method'] : $this->method = "get");
@@ -63,7 +65,11 @@ class Form
     {
         return $this->name;
     }
-    
+
+
+    /**
+     * @throws FatalException
+     */
     public function addField($name, $type, $attr = [])
     {
         return $this->fields[] = $this->createField($name, $type, $attr);
@@ -191,7 +197,9 @@ class Form
     }
 
 
-
+    /**
+     * @throws FatalException
+     */
     private function createField($name, $type, $defaults = [])
     {
         if (mb_strpos($type,"\\") === false) {
@@ -211,7 +219,7 @@ class Form
         }
     }
 
-    public function getValues()
+    public function getValues(): array
     {
         $result = [];
         foreach ($this->fields as $key => $field) {
@@ -237,7 +245,7 @@ class Form
 
         $value = (!is_array($field->getValue()) ? trim($field->getValue()) : array_map("trim", $field->getValue()));
         $required = $field->getOption("required");
-        if ($value == "" && $required == true) {
+        if ($value == "" && $required) {
             $field->addError(($field->getOption("error_require") != null ) ? $field->getOption("error_require") :"Field required");
             return ;
         } elseif ($value != "") {
@@ -463,7 +471,7 @@ class Form
     /**
      * Form::sendOK()
      * Funkcja sprawdza czy formularz został wyslany i zawiera bledy walidacji
-     * @return true jezeli wyslany i nie zawiera bledow, false gdy nie wyslany lub zawiera bledy
+     * @return true|false jezeli wyslany i nie zawiera bledow, false gdy nie wyslany lub zawiera bledy
      */
     public function sendOK()
     {
