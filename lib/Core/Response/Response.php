@@ -25,4 +25,9 @@ class Response
         return new static();
     }
 
+    public function getContent()
+    {
+        return $this->content;
+    }
+
 }

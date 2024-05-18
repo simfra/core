@@ -1,5 +1,5 @@
 <?php
-namespace Core\Request;
+namespace Core\Request\Http;
 
 use Core\Objects\AppArray;
 use Core\Objects\AppObject;

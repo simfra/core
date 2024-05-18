@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'my_app\\' => array($baseDir . '/App/my_app'),
     'Core\\' => array($baseDir . '/lib/Core'),
+    'App_Type\\' => array($baseDir . '/lib/Core/Enums'),
     'App\\' => array($baseDir . '/lib/App'),
 );

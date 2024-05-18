@@ -10,6 +10,9 @@ if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
 } else {
     die("Please install composer package or install SIMFRA Framework with vendors");
 }
+
+require_once __DIR__ .'/../Core/Enums/App_Type.php';
+require_once __DIR__ .'/../Core/Kernel.php';
 /*
 spl_autoload_register(function ($class) {
     echo "Namespace: " .__NAMESPACE__." Class: $class <br/>";

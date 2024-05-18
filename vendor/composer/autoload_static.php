@@ -17,6 +17,7 @@ class ComposerStaticInit6a94484caeae9ae19fea73cc6cd003c2
         ),
         'A' => 
         array (
+            'App_Type\\' => 9,
             'App\\' => 4,
         ),
     );
@@ -29,6 +30,10 @@ class ComposerStaticInit6a94484caeae9ae19fea73cc6cd003c2
         'Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib/Core',
+        ),
+        'App_Type\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib/Core/Enums',
         ),
         'App\\' => 
         array (
