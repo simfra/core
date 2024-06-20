@@ -2,17 +2,15 @@
 namespace Core;
 
 use App\User\User;
-use Core\Exception\NotFoundException;
-use Core\Request\Request;
-use Core\Route\Route;
+use Core\Config\Config;
+use Core\Enums\App_Type;
 use Core\Exception\FatalException;
 use Core\Exception\PermissionException;
-use Core\Config\Config;
-use Core\Response\Response;
-use Core\Objects\AppArray;
 use Core\Objects\AppObject;
-use Core\Http\Page;
-use Core\Enums\App_Type;
+use Core\Request\Http\Request;
+use Core\Response\Response;
+use Core\Route\Route;
+
 
 abstract class Kernel
 {
@@ -23,6 +21,7 @@ abstract class Kernel
     public $page = null;
     private $booted = false;
     private $container = null;
+    private $request = null;
 
 
     /**
@@ -37,12 +36,14 @@ abstract class Kernel
         $this->container = new Container();
         set_exception_handler(array($this, "handleException"));
         set_error_handler(function($errno, $errstr, $errfile, $errline ){
+            //echo "asdas";
+            //di();
             throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
         });
         $this->application_name = $application_name;
-        if ( App_Type::PROD === $application) {
+        if ( "prod" === $application) {
             $this->isProd = true;
-        } elseif ( App_Type::DEV === $application) {
+        } elseif ( "dev" === $application) {
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
             $this->isProd = false;
@@ -218,6 +219,7 @@ abstract class Kernel
     
     public function handleRequest(Request $request)
     {
+        $this->request = $request;
         try {
             if ($this->booted === false) {
                 $this->bootUp();
@@ -231,6 +233,7 @@ abstract class Kernel
             $this->page->add("request", $request);
             $this->page->add("preferred_lang", $request->getPreferredLanguage($this->config->app->languages));
             $response = $this->handlePage($this->page, $request);
+            $this->response = $response;
         } catch (\Error $error) {
             $response = $this->HandleException($error);
         } catch (\ErrorException $error) {
@@ -255,7 +258,7 @@ abstract class Kernel
         echo "Exception<pre>";
         print_r($exception);
         echo "</pre>";
-        die();
+        die("Asdas");
         $exception->isProd = $this->isProd; // to determine if exception been thrown in production/dev enviroment
         $temporary= new AppObject([
                 "controller" => method_exists($exception, "getName") ? $exception->getName(): "Unknown name",
@@ -331,6 +334,7 @@ abstract class Kernel
     
     public function __destruct()
     {
+        //$this->close();
         if (ob_get_length() && !$this->isProd && $this->page->struct->get("type") == "content") {
             echo "*** WARNING ***<br /> Unsend content in buffer! ";
         } else {
@@ -463,13 +467,13 @@ abstract class Kernel
         return $response;
     }
 
-    public static function loadApp(string $app_name, App_Type $app_type)
+    public static function loadApp(string $app_name, $app_type = "")
     {
-        if ($app_type === App_Type::PROD) {
+        if ($app_type === "prod") {
             echo "sadasdas";
         }
         try {
-            $kernel = "\\" . $app_name . "\\AppKernel";
+            $kernel = "\\App\\" . $app_name . "\\AppKernel";
             echo $app_name . " Kernel: $kernel";
             if (class_exists($kernel)) {
                 return new $kernel($app_name, $app_type);
