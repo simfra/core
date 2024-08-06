@@ -470,15 +470,15 @@ abstract class Kernel
     public static function loadApp(string $app_name, $app_type = "")
     {
         if ($app_type === "prod") {
-            echo "sadasdas";
+            echo "Production";
         }
         try {
             $kernel = "\\App\\" . $app_name . "\\AppKernel";
-            echo $app_name . " Kernel: $kernel";
+            //echo $app_name . " Kernel: $kernel";
             if (class_exists($kernel)) {
                 return new $kernel($app_name, $app_type);
             } else {
-                $content = "Fatal Error occured with message <b>Unable to load app: $app_name</b>";
+                $content = "Fatal Error occured with message <b>Unable to load app: \"$app_name\"</b>";
             }
         } catch (\Throwable $exception) {
             $content = "Fatal Error occured with message:<br/> <b>".$exception->getMessage() ."</b><br/>
@@ -490,38 +490,6 @@ abstract class Kernel
         $buffer = "<span style='width: 90%; height: 300px; margin: 20 auto; overflow-y: scroll; background-color: #22395c; border-radius: 5px;display: block; color: white; padding: 10px;'><h1 style='border-bottom: 1px solid white'>Buffer:</h1><br/>".ob_get_contents()."</span>";
         ob_end_clean();
         die($content . $debug_info . $buffer);
-
-     /*       $kernel = "\\" . $app_name . "\\AppKernel";
-            if (class_exists($kernel)) {
-                return new $kernel($app_name, $app_type);
-            } else {
-                //throw new FatalException("Unable to load app: $app_name",500);
-
-                //die();
-                $content = "Fatal Error occured with message <b>Unable to load app: $app_name</b>";
-                try {
-                    //$response = Response::getResponse();
-                    $response = new Response();
-
-                    echo "<pre>";
-                    print_r($response);
-                    echo "</pre>";
-                    $response->sendResponse();
-                    //return $response;
-//                    die();
-                    //$response->sendResponse();
-                } catch (\Throwable $exception) {
-                    http_response_code(500);
-                    ob_end_flush();
-                    $content = "Fatal Error occured with message:<br/> <b>".$exception->getMessage() ."</b><br/>
-                                File: ". $exception->getFile() ."<br/> Line: " . $exception->getLine();
-                    die($content);
-                }
-
-                //$response = new \Core\Response\Http\Response\Response($content, 500, false);
-            }
-*/
-
     }
 
     public function getIP()
