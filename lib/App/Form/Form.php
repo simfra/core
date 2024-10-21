@@ -25,7 +25,6 @@ class Form
      */
     public function __construct($form = [])
     {
-        //(isset($form['name']) ? $this->name = $form['name'] : $this->name = "submit");
         $this->name = $form['name'] ?? "submit";
         (isset($form['id']) ? $this->id = $form['id'] : "");
         (isset($form['class']) ? $this->class = $form['class'] : "");
@@ -79,7 +78,6 @@ class Form
     public function loadXml($file)
     {
         $file = __DIR__ . "/Schema/$file";
-        //echo $file;
         if (file_exists($file)) {
             $xml = @simplexml_load_file($file);
             if ($xml === false) {
@@ -143,8 +141,6 @@ class Form
 
     public function generateView()
     {
-        //ob_start(); Turn on on production
-
         if (isset($_POST)) {
             $this->assignValues($_POST);
             //print_r($_POST);
@@ -163,13 +159,7 @@ class Form
             }
         }
         $this->form .= $submit_input;
-        // submit button
-        //if ()
-        //$this->form .= "<input type='submit' name='" . $this->name . "'";
-        //(isset($this->submit)) ? $this->form .= " value='" . $this->submit ."' " :  "";
-        //$this->form .= "/>\n";
         $this->form .= "</form>\n";
-        //ob_end_clean();
         return $this->form;
     }
 
@@ -185,10 +175,9 @@ class Form
 
     public function assignValues($table)
     {
-        //print_r($table);
+
         foreach ($this->fields as $key => $field) {
             $name = trim($field->getName(),"[]");
-            //echo "Name $name ";
             if (isset($table[$name])) {
                 //echo "przekazano do ustawiania wartosci: ". print_r($table[$name]) ."\n";
                 $field->setValue($table[$name]);
@@ -207,9 +196,7 @@ class Form
         } else {
             $class = $type;
         }
-//echo "<br/>".$class ."<br/>";
         if (class_exists($class)) {
-            //echo "Adadsasda $class<br/>";
             return
                 (new $class)
                 ->setName($name)
@@ -409,7 +396,6 @@ class Form
 
     public function isSend()
     {
-//        print_r($this->name);
         switch(strtolower($this->method))
         {
             case "post":
@@ -520,8 +506,6 @@ class Form
         return $clear;
     }
 
-
-    /*******************************************************************************************************/
 
     /**
      * Form::addDefaults()

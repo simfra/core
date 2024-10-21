@@ -21,7 +21,6 @@ class CheckBoxType extends \App\Form\FieldTypes\BaseType
 
     public function generateView()
     {
-        //echo var_dump($this->getOption("autocomplete"));
         if ($this->hasErrors()) {
             $this->setOption("class", $this->getOption("class"). ($this->getOption("class_error") != "") ? $this->getOption("class_error"): " error");
         }

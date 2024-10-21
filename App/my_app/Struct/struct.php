@@ -13,7 +13,7 @@ $page = array (
     'show_in_menu' => '1',
     'template' => '0',
     'content' => [
-        "en" => "aaa"
+        "en" => "main"
     ],
     'target' => '-1', // when type of page is redirect -> target = id of the page
     'load_lang' => '0',
