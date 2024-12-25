@@ -29,7 +29,10 @@ class Mysql
         return $this->connection;
     }
 
-    public function connect()
+    /**
+     * @throws FatalException
+     */
+    public function connect(): bool|\mysqli
     {
         if ($this->dbname == "") {
             throw new FatalException("Database","You must specify Database name");
@@ -42,18 +45,20 @@ class Mysql
         }
     }
 
+    /**
+     * @throws FatalException
+     */
     public function query($string)
     {
         if(!$this->connection) {
             $this->connect();
         }
         $database = $this->connection;
-        $result = $database->query($string);
         //die(var_dump($result));
-        return $result;
+        return $database->query($string);
     }
 
-    public function select($table, $columns, $where, $extra = "")
+    public function select($table, $columns, $where, $extra = ""): string
     {
         if ($columns == "") {
             $query = "SELECT * FROM $table ";
@@ -68,7 +73,7 @@ class Mysql
         return $query;
     }
 
-    public function insert($table, $insert_values)
+    public function insert($table, $insert_values): string
     {
         $query = "INSERT INTO $table ";
         $keys = [];
@@ -78,7 +83,7 @@ class Mysql
             if (is_string($value)) {
                 $values[] = "'" . mysqli_real_escape_string($this->getConnection(), $value) . "'";
             } else {
-                $values[] = "" . mysqli_real_escape_string($this->getConnection(), $value) . "";
+                $values[] = mysqli_real_escape_string($this->getConnection(), $value);
             }
         }
         $query .= "(" . implode("," , $keys) .")";
@@ -92,7 +97,7 @@ class Mysql
      * @param string $where - where condition
      * @return -1 when update error, or int of affected rows
      */
-    public function update($table, $fields, $where='')
+    public function update($table, $fields, $where=''): string
     {
         $query = "UPDATE $table SET ";
         $sets = [];

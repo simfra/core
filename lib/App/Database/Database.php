@@ -168,20 +168,16 @@ class Database extends Bundle
         switch($method) {
             default:
                 return $result->fetch_all(MYSQLI_BOTH);
-                break;
             case "assoc":
                 return $result->fetch_all(MYSQLI_ASSOC);
-                break;
             case "num":
                 return $result->fetch_all(MYSQLI_NUM);
-                break;
             case "object":
                 $rows = [];
                 while($row = $result->fetch_object()) {
                     $rows[] = $row;
                 }
                 return $rows;
-                break;
         }
     }
 
