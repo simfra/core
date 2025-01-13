@@ -106,7 +106,7 @@ class Form
         }
     }
 
-    public function reset()
+    public function reset(): bool
     {
         foreach($this->fields as $field) {
             if($field->getType()!= "submit") {
@@ -117,6 +117,7 @@ class Form
             unset($this->errors);
 
         }
+        return true;
     }
 
     public function saveFormToXml($filename = "", $dir = __DIR__ . "/Schema/")
