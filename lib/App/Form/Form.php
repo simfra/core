@@ -140,7 +140,7 @@ class Form
         return $this->form;
     }
 
-    public function generateView()
+    public function generateView(): string
     {
         if (isset($_POST)) {
             $this->assignValues($_POST);
